@@ -1,0 +1,91 @@
+OS-Centos7
+### Install environment-modules ###
+
+# yum install environment-modules.x86_64
+
+# vim /usr/share/Modules/init/.modulespath
+# add line in last --->  /opt/apps/modulefiles
+
+# cat /etc/exports
+# add line in last --->  /opt/apps *(rw,no_root_squash,async)
+
+# mkdir compilers utils source
+
+# cd source && mkdir -p gcc/gcc-11
+
+# git clone -b releases/gcc-11 https://github.com/gcc-mirror/gcc.git gcc-11
+
+# cd gcc-11
+
+# ./contrib/download_prerequisites
+
+# ./configure --disable-multilib --enable-languages=c,c++ --prefix=/opt/apps/compilers/gcc-11
+
+# make -j $(nproc)
+
+# make install
+
+######################### Create Module File ######################### 
+# cd /opt/apps/modulefiles/
+# mkdir apps compile utils 
+# mkdir –p compiler/gcc/
+# vim compiler/gcc/gcc-11.2.1
+
+#%Module1.0#####################################################################
+###
+### gcc-11.2.1 modulefile
+###
+###
+#
+#
+set     NAME            "gcc-11.2.1"
+set     VERSION         "11.2.1"
+set     DESC            "gcc-11.2.1"
+set     BASEDIR         /opt/apps/compilers/gcc-11
+
+
+prepend-path    PKG_CONFIG_PATH         $BASEDIR/lib/pkgconfig
+
+prepend-path    PATH                    $BASEDIR/bin
+#prepend-path    LIBRARY_PATH            $BASEDIR/lib
+prepend-path    LIBRARY_PATH            $BASEDIR/lib64
+#prepend-path    LD_LIBRARY_PATH         $BASEDIR/lib
+prepend-path    LD_LIBRARY_PATH         $BASEDIR/lib64
+prepend-path    INCLUDE_PATH            $BASEDIR/include
+prepend-path    FPATH                   $BASEDIR/include
+prepend-path    CPATH                   $BASEDIR/include
+prepend-path    MANPATH                 $BASEDIR/share/man
+
+
+proc ModulesHelp { } {
+        puts stderr "\n\n $NAME $VERSION Version - $DESC  \n"
+}
+
+module-whatis   "$NAME $VERSION Version - $DESC "
+
+
+===========================================================================================
+
+# module av
+# module load compiler/gcc/gcc-11.2.1
+# which gcc
+/opt/apps/compilers/gcc-11/bin/gcc
+
+===========================================================================================
+
+After installation Troublshooting :
+For configured with option
+# module load compiler/gcc/gcc-11.2.1
+# echo | gcc -v -E
+
+===========================================================================================
+
+User Module to another system via NFS share directory:
+# module use /opt/apps/modulefiles/
+
+===========================================================================================
+
+Other Troubleshooting:
+
+https://stackoverflow.com/questions/9450394/how-to-install-gcc-piece-by-piece-with-gmp-mpfr-mpc-elf-without-shared-libra
+
