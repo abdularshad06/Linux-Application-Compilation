@@ -1,0 +1,53 @@
+
+# wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.2.tar.gz
+
+# tar -xvf openmpi-4.1.2.tar.gz
+# cd openmpi-4.1.2
+
+$ tar xf openmpi-<version>.tar.bz2
+$ cd openmpi-<version>
+$ ./configure --prefix=/opt/apps/compilers/openmpi/openmpi-4.1.2 |& tee config.out
+...lots of output...
+$ make -j $(nproc) |& tee make.out
+...lots of output...
+$ make install |& tee install.out
+...lots of output...
+
+
+######### Create Module File #########
+
+[root@apps share]# cat /opt/apps/modulefiles/compilers/openmpi/openmpi-4.1.2
+#%Module1.0#####################################################################
+###
+### openmpi-4.1.2 modulefile
+###
+###
+#
+#
+#
+if { ![ is-loaded  compilers/gcc/gcc-11.2.1 ] } {
+        module load  compilers/gcc/gcc-11.2.1
+}
+
+set     NAME            "openmpi-4.1.2"
+set     VERSION         "4.1.2"
+set     DESC            "openmpi-4.1.2"
+set     BASEDIR         /opt/apps/compilers/openmpi/openmpi-4.1.2
+
+
+prepend-path    PKG_CONFIG_PATH         $BASEDIR/lib/pkgconfig
+
+prepend-path    PATH                    $BASEDIR/bin
+prepend-path    LIBRARY_PATH            $BASEDIR/lib
+prepend-path    LD_LIBRARY_PATH         $BASEDIR/lib
+prepend-path    INCLUDE_PATH            $BASEDIR/include
+prepend-path    FPATH                   $BASEDIR/include
+prepend-path    CPATH                   $BASEDIR/include
+prepend-path    MANPATH                 $BASEDIR/share/man
+
+
+#proc ModulesHelp { } {
+#        puts stderr "\n\n $NAME $VERSION Version - $DESC  \n"
+#}
+
+#module-whatis   "$NAME $VERSION Version - $DESC "
