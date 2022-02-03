@@ -51,3 +51,8 @@ prepend-path    MANPATH                 $BASEDIR/share/man
 #}
 
 #module-whatis   "$NAME $VERSION Version - $DESC "
+
+===================================================================================
+For testing openmpi code compilation then follow the below link
+https://mpitutorial.com/tutorials/mpi-hello-world/
+===================================================================================
