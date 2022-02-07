@@ -11,15 +11,19 @@ OS-Centos7
 
 # mkdir compilers utils source
 
-# cd source && mkdir -p gcc/gcc-11
+# mkdir /opt/apps/source/gcc/11.2.0
 
-# git clone -b releases/gcc-11 https://github.com/gcc-mirror/gcc.git gcc-11
+# cd /opt/apps/source/gcc/
 
-# cd gcc-11
+# git clone -b releases/gcc-11.2.0 https://github.com/gcc-mirror/gcc.git 11.2.0
+
+# cd 11.2.0
 
 # ./contrib/download_prerequisites
 
-# ./configure --disable-multilib --enable-languages=c,c++ --prefix=/opt/apps/compilers/gcc/11.2.1
+# ./configure --disable-multilib --enable-languages=c,c++ --prefix=/opt/apps/compilers/gcc/11.2.0
+or
+# ./configure --prefix=/opt/apps/compilers/gcc/11.2.0 --enable-languages=c,c++,fortran --disable-multilib
 
 # make -j $(nproc)
 
@@ -41,8 +45,7 @@ OS-Centos7
 set     NAME            "gcc-11.2.1"
 set     VERSION         "11.2.1"
 set     DESC            "gcc-11.2.1"
-set     BASEDIR         /opt/apps/compilers/gcc/11.2.1
-
+set     BASEDIR         /opt/apps/compilers/gcc/11.2.0
 
 prepend-path    PKG_CONFIG_PATH         $BASEDIR/lib/pkgconfig
 
