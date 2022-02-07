@@ -69,7 +69,7 @@ module-whatis   "$NAME $VERSION Version - $DESC "
 # module av
 # module load compiler/gcc/gcc-11.2.1
 # which gcc
-/opt/apps/compilers/gcc-11/bin/gcc
+/opt/apps/compilers/gcc/gcc-11/bin/gcc
 
 ===========================================================================================
 
