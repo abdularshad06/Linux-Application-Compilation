@@ -1,0 +1,56 @@
+mkdir /opt/apps/utils/automake/1.15.1/
+
+cd /opt/apps/utils/automake/1.15.1/
+
+wget https://ftp.gnu.org/gnu/automake/automake-1.15.1.tar.gz
+
+tar xvf automake-1.15.1.tar.gz
+
+cd automake-1.15.1
+
+./configure --prefix=/opt/apps/utils/automake/1.15.1/
+
+make -j $(nproc)
+
+make install
+
+####################### CREATE MODULEFILE #######################
+
+[root@apps bin]# cat /opt/apps/modulefiles/utils/automake/1.15.1
+
+
+#%Module1.0#####################################################################
+###
+### automake-1.15.1 modulefile
+###
+###
+#
+#
+set     NAME            "automake-1.15.1"
+set     VERSION         "1.15.1"
+set     DESC            "automake-1.15.1"
+set     BASEDIR         /opt/apps/utils/automake/1.15.1/
+
+
+prepend-path    PKG_CONFIG_PATH         $BASEDIR/lib/pkgconfig
+
+prepend-path    PATH                    $BASEDIR/bin
+#prepend-path    LIBRARY_PATH            $BASEDIR/lib
+prepend-path    LIBRARY_PATH            $BASEDIR/lib64
+#prepend-path    LD_LIBRARY_PATH         $BASEDIR/lib
+prepend-path    LD_LIBRARY_PATH         $BASEDIR/lib64
+prepend-path    INCLUDE_PATH            $BASEDIR/include
+prepend-path    FPATH                   $BASEDIR/include
+prepend-path    CPATH                   $BASEDIR/include
+prepend-path    MANPATH                 $BASEDIR/share/man
+
+
+proc ModulesHelp { } {
+        puts stderr "\n\n $NAME $VERSION Version - $DESC  \n"
+}
+
+module-whatis   "$NAME $VERSION Version - $DESC "
+
+###################################################################
+
+
