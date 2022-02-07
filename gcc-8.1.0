@@ -1,0 +1,44 @@
+# cd /opt/apps/source/gcc
+# git clone -b releases/gcc-8.1.0 https://github.com/gcc-mirror/gcc.git gcc-8.1.0
+# cd gcc-8.1.0/
+# ./contrib/download_prerequisites
+# ./configure --prefix=/opt/apps/compilers/gcc/8.1.0 --enable-languages=c,c++,fortran --disable-multilib
+# make -j $(nproc)
+# make install
+
+
+
+############################## Create Modulefile ##############################
+# vim -p  /opt/apps/modulefiles/compilers/gcc/8.1.0
+
+#%Module1.0#####################################################################
+###
+### gcc-8.1.0 modulefile
+###
+###
+#
+#
+set     NAME            "gcc-8.1.0"
+set     VERSION         "8.1.0"
+set     DESC            "gcc-8.1.0"
+set     BASEDIR         /opt/apps/compilers/gcc/8.1.0
+
+
+prepend-path    PKG_CONFIG_PATH         $BASEDIR/lib/pkgconfig
+
+prepend-path    PATH                    $BASEDIR/bin
+#prepend-path    LIBRARY_PATH            $BASEDIR/lib
+prepend-path    LIBRARY_PATH            $BASEDIR/lib64
+#prepend-path    LD_LIBRARY_PATH         $BASEDIR/lib
+prepend-path    LD_LIBRARY_PATH         $BASEDIR/lib64
+prepend-path    INCLUDE_PATH            $BASEDIR/include
+prepend-path    FPATH                   $BASEDIR/include
+prepend-path    CPATH                   $BASEDIR/include
+prepend-path    MANPATH                 $BASEDIR/share/man
+
+
+proc ModulesHelp { } {
+        puts stderr "\n\n $NAME $VERSION Version - $DESC  \n"
+}
+
+###############################################################################
