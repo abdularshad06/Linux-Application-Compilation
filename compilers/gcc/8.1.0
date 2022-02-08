@@ -1,0 +1,52 @@
+
+Download mpich tar file from below URL :-
+https://www.mpich.org/static//downloads/3.4.1/
+
+# wget https://www.mpich.org/static//downloads/3.4.1/mpich-3.4.1.tar.gz
+# tar xvf mpich-3.4.1.tar.gz
+# cd mpich-3.4.1
+# ./configure --prefix=/opt/apps/compilers/mpich/3.4.1 --with-device=ch3
+# make -j $(nproc)
+# make install
+
+
+# vim /opt/apps/modulefiles/compilers/mpich/gcc-8.1.0/3.4.1
+
+#%Module1.0#####################################################################
+###
+### mpich-3.4.1 modulefile
+###
+###
+#
+#
+if { ![ is-loaded  compilers/gcc/8.1.0 ] } {
+        module load  compilers/gcc/8.1.0
+}
+
+set     NAME            "mpich-3.4.1"
+set     VERSION         "3.4.1"
+set     DESC            "mpich-3.4.1"
+set     BASEDIR         /opt/apps/compilers/mpich/3.4.1
+
+
+prepend-path    PKG_CONFIG_PATH         $BASEDIR/lib/pkgconfig
+
+prepend-path    PATH                    $BASEDIR/bin
+prepend-path    LIBRARY_PATH            $BASEDIR/lib
+#prepend-path    LIBRARY_PATH            $BASEDIR/lib64
+prepend-path    LD_LIBRARY_PATH         $BASEDIR/lib
+#prepend-path    LD_LIBRARY_PATH         $BASEDIR/lib64
+prepend-path    INCLUDE_PATH            $BASEDIR/include
+prepend-path    FPATH                   $BASEDIR/include
+prepend-path    CPATH                   $BASEDIR/include
+prepend-path    MANPATH                 $BASEDIR/share/man
+
+
+proc ModulesHelp { } {
+        puts stderr "\n\n $NAME $VERSION Version - $DESC  \n"
+}
+module-whatis   "$NAME $VERSION Version - $DESC "
+
+==================================================================================
+
+
