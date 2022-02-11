@@ -1,0 +1,58 @@
+mkdir -p /opt/apps/pre-compiled/paraview
+cd /opt/apps/pre-compiled/paraview/
+
+###### Download ParaView Application from below websites and upload it to the application server ######
+https://www.paraview.org/download/
+Version 5.9 and 5.8
+
+mkdir /opt/apps/apps/paraview
+tar -xvf ParaView-5.9.1-MPI-Linux-Python3.8-64bit.tar.gz -C /opt/apps/apps/paraview
+mkdir /opt/apps/modulefiles/apps/paraview
+vim /opt/apps/modulefiles/apps/paraview/5.9.1
+
+#%Module1.0#####################################################################
+###
+### paraview-5.9.1 modulefile
+###
+###
+#
+#
+set     NAME            "paraview-5.9.1"
+set     VERSION         "5.9.1"
+set     DESC            "paraview-5.9.1"
+set     BASEDIR         /opt/apps/apps/paraview/ParaView-5.9.1-MPI-Linux-Python3.8-64bit
+
+
+prepend-path    PATH                    $BASEDIR/bin
+prepend-path    LIBRARY_PATH            $BASEDIR/lib
+prepend-path    LD_LIBRARY_PATH         $BASEDIR/lib
+
+
+proc ModulesHelp { } {
+        puts stderr "\n\n $NAME $VERSION Version - $DESC  \n"
+}
+
+module-whatis   "$NAME $VERSION Version - $DESC "
+
+#####################################################################################
+
+##### For X11 Forwarding Support #####
+
+echo $DISPLAY
+yum install -y xorg-x11-server-Xorg xorg-x11-xauth xorg-x11-apps
+
+vim /etc/ssh/sshd_config
+X11Forwarding yes
+X11DisplayOffset 10
+X11UseLocalhost yes
+
+systemctl restart sshd
+
+
+logout and login again then check
+
+echo $DISPLAY
+
+################################################################
+
+
