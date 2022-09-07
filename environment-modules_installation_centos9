@@ -1,0 +1,26 @@
+dnf update && dnf upgrade -y
+
+dnf install environment-modules.x86_64
+
+rpm -qa | grep module
+
+source /etc/profile.d/modules.sh
+
+
+
+
+
+# vim /usr/share/Modules/init/.modulespath
+# add line in last --->  /opt/apps/modulefiles
+
+# cat /etc/exports
+# add line in last --->  /opt/apps *(rw,no_root_squash,async)
+
+# mkdir compilers utils source
+
+# mkdir -p /opt/apps/source/gcc/11.2.0
+
+# cd /opt/apps/source/gcc/
+
+# git clone -b releases/gcc-11.2.0 https://github.com/gcc-mirror/gcc.git 11.2.0
+
